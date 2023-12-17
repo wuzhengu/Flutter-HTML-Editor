@@ -20,7 +20,7 @@ class _RegularExampleState extends State<RegularExample> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey,
-      body: Center(
+      body: SafeArea(
         child: SizedBox(
           width: 800,
           child: RichTextEditor(
