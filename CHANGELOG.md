@@ -1,4 +1,4 @@
-## 0.4.3
+## 0.4.4
 
 * fix overflow issue in font color buttons
 * fix linebreak issue on subtags
