@@ -100,12 +100,13 @@ class Tag {
       Map<String, dynamic> properties = {};
 
       for (int i = 1; i < tagParts.length; i++) {
-        List<String> property = tagParts[i].split("=");
+        int splitPoint = tagParts[i].indexOf("=");
 
-        String key = property[0];
-        String value = property.length == 2
-            ? property[1].substring(1, property[1].length - 1)
-            : "";
+        String key = tagParts[i].substring(0, splitPoint);
+        String value = tagParts[i].substring(splitPoint + 1);
+
+        if (value.startsWith("\"")) value = value.substring(1);
+        if (value.endsWith("\"")) value = value.substring(0, value.length - 1);
 
         properties[key] = value;
       }

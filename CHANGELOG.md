@@ -1,3 +1,7 @@
+## 0.4.7
+
+* added ?, = and _ as allowed characters in HTML attributes
+
 ## 0.4.4
 
 * fix overflow issue in font color buttons
