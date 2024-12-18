@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:light_html_editor/ui/button_row.dart';
 import 'package:light_html_editor/data/text_constants.dart';
 import 'package:light_html_editor/light_html_editor.dart';
+import 'package:light_html_editor/ui/button_row.dart';
 
 import 'api/html_editor_controller.dart';
 
@@ -85,8 +85,7 @@ class LightHtmlRichTextEditor extends StatefulWidget {
   final void Function(String valueNew) onChanged;
 
   @override
-  _LightHtmlRichTextEditorState createState() =>
-      _LightHtmlRichTextEditorState();
+  _LightHtmlRichTextEditorState createState() => _LightHtmlRichTextEditorState();
 }
 
 class _LightHtmlRichTextEditorState extends State<LightHtmlRichTextEditor> {
@@ -139,8 +138,7 @@ class _LightHtmlRichTextEditorState extends State<LightHtmlRichTextEditor> {
         int position = _controller.selection.extentOffset;
 
         if (position > 0) {
-          String lastChar =
-              _controller.text[_controller.selection.extentOffset - 1];
+          String lastChar = _controller.text[_controller.selection.extentOffset - 1];
 
           if (lastChar == "\n" || true) {
             List<String> lines = _controller.text.split("\n");
@@ -161,8 +159,7 @@ class _LightHtmlRichTextEditorState extends State<LightHtmlRichTextEditor> {
               double scrollAmount = lineIndex / (lines.length - 1);
 
               _previewScrollController.animateTo(
-                _previewScrollController.position.maxScrollExtent *
-                    scrollAmount,
+                _previewScrollController.position.maxScrollExtent * scrollAmount,
                 duration: Duration(milliseconds: 200),
                 curve: Curves.fastOutSlowIn,
               );
@@ -190,64 +187,65 @@ class _LightHtmlRichTextEditorState extends State<LightHtmlRichTextEditor> {
             SizedBox(height: widget.editorDecoration.buttonEditorSpacing),
           ],
           Expanded(
-            child: Row(
+            child: Column(
               children: [
-                Expanded(
-                  child: Column(
-                    children: [
-                      Text(
-                        widget.editorDecoration.editorLabel ?? "Raw",
-                        style: widget.labelTextStyle,
-                      ),
-                      Expanded(
-                        child: Container(
-                          height: double.infinity,
-                          decoration: BoxDecoration(
-                            borderRadius: widget.editorDecoration.borderRadius,
-                            border: widget.editorDecoration.border,
-                          ),
-                          child: LightHtmlEditorTextField(
-                            autofocus: widget.autofocus,
-                            editorDecoration: widget.editorDecoration,
-                            onChanged: widget.onChanged,
-                            controller: _controller,
-                            initialValue: widget.initialValue,
-                            maxLength: widget.maxLength,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                Text(
+                  widget.editorDecoration.editorLabel ?? "Raw",
+                  style: widget.labelTextStyle,
                 ),
-                if (widget.showPreview) ...[
-                  SizedBox(width: widget.editorDecoration.editorPreviewSpacing),
-                  Expanded(
-                    child: Container(
-                      height: double.infinity,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            widget.previewDecoration.label ?? "Preview",
-                            style: widget.labelTextStyle,
-                          ),
-                          Expanded(
-                            child: LightHtmlRenderer.fromRichtext(
-                              _controller.text,
-                              placeholders: widget.placeholders,
-                              placeholderMarker: widget.placeholderMarker,
-                              rendererDecoration: widget.previewDecoration,
-                              scrollController: _previewScrollController,
-                            ),
-                          ),
-                        ],
-                      ),
+                Expanded(
+                  child: Container(
+                    height: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: widget.editorDecoration.borderRadius,
+                      border: widget.editorDecoration.border,
+                    ),
+                    child: LightHtmlEditorTextField(
+                      autofocus: widget.autofocus,
+                      editorDecoration: widget.editorDecoration,
+                      onChanged: widget.onChanged,
+                      controller: _controller,
+                      initialValue: widget.initialValue,
+                      maxLength: widget.maxLength,
                     ),
                   ),
-                ],
+                ),
               ],
             ),
           ),
+          if (widget.showPreview)
+            Expanded(
+              child: Container(
+                height: double.infinity,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      constraints: BoxConstraints(
+                        minHeight: widget.editorDecoration.editorPreviewSpacing,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.surfaceContainer,
+                      ),
+                      alignment: Alignment.center,
+                      child: Text(
+                        widget.previewDecoration.label ?? "Preview",
+                        style: widget.labelTextStyle,
+                      ),
+                    ),
+                    Expanded(
+                      child: LightHtmlRenderer.fromRichtext(
+                        _controller.text,
+                        placeholders: widget.placeholders,
+                        placeholderMarker: widget.placeholderMarker,
+                        rendererDecoration: widget.previewDecoration,
+                        scrollController: _previewScrollController,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
         ],
       ),
     );
